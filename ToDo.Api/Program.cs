@@ -3,6 +3,7 @@ using Scalar.AspNetCore;
 using ToDo.Api.Models;
 using ToDo.Api.Data;
 using ToDo.Api.Endpoints;
+using ToDo.Api.DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.CreateMap<CreateToDoItemDto, ToDoItem>();
+    cfg.CreateMap<ToDoItem, ToDoItemDto>();
+    cfg.CreateMap<CreateToDoItemDto, ToDoItem>();
+
+});
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
